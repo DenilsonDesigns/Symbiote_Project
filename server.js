@@ -7,6 +7,7 @@ const path = require("path");
 
 //Routes
 const users = require("./routes/users");
+const posts = require("./routes/posts");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -34,6 +35,7 @@ require("./config/passport")(passport);
 
 //use routes
 app.use("/users", users);
+app.use("/posts", posts);
 ///////////
 
 //SERVE STATIC ASSETS IF IN PRODUCTION
