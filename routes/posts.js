@@ -36,12 +36,18 @@ router.post(
     if (!req.body.title || !req.body.body) {
       return res.status(404).json({ error: "Title and body required" });
     }
-    const newPost = new Post({
-      user: req.user.id,
-      title: req.body.title,
-      body: req.body.body
+    Post.findOne({ title: req.body.title }).then(post => {
+      if (post) {
+        return res.status(404).json({ error: "Title already exists" });
+      } else {
+        const newPost = new Post({
+          user: req.user.id,
+          title: req.body.title,
+          body: req.body.body
+        });
+        newPost.save().then(post => res.json(post));
+      }
     });
-    newPost.save().then(post => res.json(post));
   }
 );
 
